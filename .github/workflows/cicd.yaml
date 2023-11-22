@@ -44,4 +44,4 @@ jobs:
       - run: terraform -chdir=./infra apply -auto-approve
 
       # Deployment in das S3 Bucket
-      - run: aws s3 sync --region eu-central-1 ./build s3://my-best-website-bucket-abc1234567gkl/ --profile techstarter
+      - run: aws s3 sync --region eu-central-1 ./build s3://my-best-website-123abc/ --profile techstarter

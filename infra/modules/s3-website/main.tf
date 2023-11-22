@@ -21,36 +21,15 @@ resource "aws_s3_bucket_website_configuration" "this" {
 }
 
 
-resource "aws_s3_bucket_policy" "this" {
+
+resource "aws_s3_bucket_public_access_block" "this" {
   bucket = aws_s3_bucket.this.id
 
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Sid       = "PublicReadGetObject",
-        Effect    = "Allow",
-        Principal = "*",
-        Action    = "s3:*",
-        Resource  = [
-          "arn:aws:s3:::my-best-website-bucket-abc1234567gkl/*",
-          "arn:aws:s3:::my-best-website-bucket-abc1234567gkl",
-        ]
-      },
-    ]
-  })
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
 }
-
-
-
-# resource "aws_s3_bucket_public_access_block" "this" {
-#   bucket = aws_s3_bucket.this.id
-
-#   block_public_acls       = false
-#   block_public_policy     = false
-#   ignore_public_acls      = false
-#   restrict_public_buckets = false
-# }
 
 # resource "aws_s3_bucket_policy" "this" {
 #   bucket = aws_s3_bucket.this.id
@@ -65,6 +44,26 @@ resource "aws_s3_bucket_policy" "this" {
 #         Resource  = [
 #           "${aws_s3_bucket.this.arn}/*",
 #           "${aws_s3_bucket.this.arn}",
+#         ]
+#       },
+#     ]
+#   })
+# }
+
+# resource "aws_s3_bucket_policy" "this" {
+#   bucket = aws_s3_bucket.this.id
+
+#   policy = jsonencode({
+#     Version = "2012-10-17",
+#     Statement = [
+#       {
+#         Sid       = "PublicReadGetObject",
+#         Effect    = "Allow",
+#         Principal = "*",
+#         Action    = "s3:*",
+#         Resource  = [
+#           "arn:aws:s3:::my-best-website-bucket-abc1234567gkl/*",
+#           "arn:aws:s3:::my-best-website-bucket-abc1234567gkl",
 #         ]
 #       },
 #     ]
