@@ -15,8 +15,8 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-     
-     # Jetzt können wir auch npm Befehle in der Pipeline ausführen / .github/workflows/cicd.yaml
+    
+      # Jetzt können wir auch npm Befehle in der Pipeline ausführen / .github/workflows/cicd.yaml
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
@@ -24,3 +24,13 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test  # Unit Tests
+      # Installation der aws cli
+      - id: install-aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+      - run: mkdir -p ~/.aws/
+      - run: echo "$super_secret" > ~/.aws/credentials
+        env: # Or as an environment variable
+          super_secret: ${{ secrets.AWS_CONFIG }} # my Secret name AWS_CONFIG
+      - run: cat ~/.aws/credentials
+      - run: aws configure list-profiles
+      - run: aws s3 ls --region eu-central-1 --profile techstarter    
