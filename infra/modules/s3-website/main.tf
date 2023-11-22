@@ -21,7 +21,6 @@ resource "aws_s3_bucket_website_configuration" "this" {
 }
 
 
-
 resource "aws_s3_bucket_public_access_block" "this" {
   bucket = aws_s3_bucket.this.id
 
